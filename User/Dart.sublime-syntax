@@ -1,0 +1,628 @@
+%YAML 1.2
+---
+# Standalone Dart/Flutter syntax definition for Sublime Text 4 (build 4200+).
+# Targets Dart 3.13 lexical syntax. No plugin, Package Control installation,
+# package manager, external include, or generated cache file is required.
+name: Dart (Standalone)
+file_extensions:
+  - dart
+first_line_match: '^#!.*\b(?:dart|flutter)\b'
+scope: source.dart
+version: 2
+
+variables:
+  identifier: '[A-Za-z_][A-Za-z0-9_]*'
+  lower_identifier: '[a-z_][A-Za-z0-9_]*'
+  type_identifier: '_*[A-Z][A-Za-z0-9_]*'
+  primitive_type: 'bool|double|dynamic|int|num|void'
+  core_type: 'BigInt|DateTime|Duration|Enum|Function|Future|FutureOr|Iterable|Iterator|List|Map|Never|Null|Object|Pattern|Record|RegExp|Runes|Set|StackTrace|Stopwatch|Stream|String|StringBuffer|Symbol|Type|Uri'
+  decimal_digits: '[0-9](?:[0-9_]*[0-9])?'
+  hexadecimal_digits: '[0-9A-Fa-f](?:[0-9A-Fa-f_]*[0-9A-Fa-f])?'
+  exponent: '[eE][+-]?{{decimal_digits}}'
+
+contexts:
+  main:
+    - include: shebang
+    - include: code
+
+  # The ordering here is deliberate. More specific constructs must precede
+  # generic identifiers and operators.
+  code:
+    - include: comments
+    - include: declarations
+    - include: strings
+    - include: annotations
+    - include: numbers
+    - include: literals-and-language-variables
+    - include: keywords
+    - include: function-declarations
+    - include: member-access
+    - include: calls-and-types
+    - include: symbols
+    - include: named-fields
+    - include: operators
+    - include: brackets
+    - include: punctuation
+    - include: identifiers
+
+  shebang:
+    - match: '^(#!)(.*)$'
+      scope: comment.line.shebang.dart
+      captures:
+        1: punctuation.definition.comment.begin.dart
+        2: comment.line.shebang.dart
+
+  comments:
+    - match: '///'
+      scope: punctuation.definition.comment.begin.dart
+      push: documentation-line-comment
+    - match: '//'
+      scope: punctuation.definition.comment.begin.dart
+      push: line-comment
+    - match: '/\*\*'
+      scope: punctuation.definition.comment.begin.dart
+      push: documentation-block-comment
+    - match: '/\*'
+      scope: punctuation.definition.comment.begin.dart
+      push: block-comment
+
+  line-comment:
+    - meta_scope: comment.line.double-slash.dart
+    - match: '$'
+      pop: true
+    - include: comment-tags
+
+  documentation-line-comment:
+    - meta_scope: comment.line.documentation.dart
+    - match: '$'
+      pop: true
+    - include: documentation-comment-content
+    - include: comment-tags
+
+  block-comment:
+    - meta_scope: comment.block.dart
+    - match: '/\*'
+      scope: punctuation.definition.comment.begin.dart
+      push: block-comment
+    - match: '\*/'
+      scope: punctuation.definition.comment.end.dart
+      pop: true
+    - include: comment-tags
+
+  documentation-block-comment:
+    - meta_scope: comment.block.documentation.dart
+    - match: '/\*'
+      scope: punctuation.definition.comment.begin.dart
+      push: block-comment
+    - match: '\*/'
+      scope: punctuation.definition.comment.end.dart
+      pop: true
+    - include: documentation-comment-content
+    - include: comment-tags
+
+  comment-tags:
+    - match: '\b(?:BUG|FIXME|HACK|NOTE|OPTIMIZE|TODO|WARNING|XXX)\b'
+      scope: markup.other.comment.note.dart
+
+  documentation-comment-content:
+    - match: '(\[)({{identifier}}(?:[.#]{{identifier}})*)(\])'
+      captures:
+        1: punctuation.definition.link.begin.dart
+        2: markup.underline.link.dart
+        3: punctuation.definition.link.end.dart
+    - match: '(`)([^`\n]+)(`)'
+      captures:
+        1: punctuation.definition.raw.begin.dart
+        2: markup.raw.inline.dart
+        3: punctuation.definition.raw.end.dart
+    - match: '\{@(?:canonicalFor|endtemplate|macro|template|tool)\b[^}]*\}'
+      scope: variable.annotation.documentation.dart
+
+  declarations:
+    # Dart 3.13 primary constructors may place const between the declaration
+    # keyword and the introduced type name.
+    - match: |-
+        (?x)
+        \b(mixin)\s+(class)(?:\s+(const))?\s+({{identifier}})\b
+      captures:
+        1: storage.modifier.dart
+        2: keyword.declaration.type.dart
+        3: storage.modifier.dart
+        4: entity.name.type.class.dart
+      push: maybe-type-arguments
+
+    - match: |-
+        (?x)
+        \b(extension)\s+(type)(?:\s+(const))?\s+({{identifier}})\b
+      captures:
+        1: keyword.declaration.type.dart
+        2: keyword.declaration.type.dart
+        3: storage.modifier.dart
+        4: entity.name.type.extension.dart
+      push: maybe-type-arguments
+
+    - match: |-
+        (?x)
+        \b(class|enum|mixin)(?:\s+(const))?\s+({{identifier}})\b
+      captures:
+        1: keyword.declaration.type.dart
+        2: storage.modifier.dart
+        3: entity.name.type.dart
+      push: maybe-type-arguments
+
+    - match: '\b(typedef)\s+({{identifier}})\b'
+      captures:
+        1: keyword.declaration.type.dart
+        2: entity.name.type.alias.dart
+      push: maybe-type-arguments
+
+    - match: |-
+        (?x)
+        \b(extension)\s+({{identifier}})\b
+        (?=\s*(?:<[^;={}()]*>)?\s+on\b)
+      captures:
+        1: keyword.declaration.type.dart
+        2: entity.name.type.extension.dart
+      push: maybe-type-arguments
+
+    - match: '\b(extension)\s+(on)\b'
+      captures:
+        1: keyword.declaration.type.dart
+        2: keyword.declaration.type.dart
+
+    - match: '\b(library)\s+({{identifier}}(?:\s*\.\s*{{identifier}})*)'
+      captures:
+        1: keyword.control.import.dart
+        2: entity.name.namespace.dart
+
+    - match: '\b(part)\s+(of)\b'
+      captures:
+        1: keyword.control.import.dart
+        2: keyword.control.import.dart
+
+    # Dart 3.13 concise in-body constructors: new(), new named(),
+    # factory(), and factory named(). Lower-case names avoid mistaking the
+    # conventional `new ClassName()` invocation form for a declaration.
+    - match: '\b(new)(?:\s+({{lower_identifier}}))?(?=\s*\()'
+      captures:
+        1: keyword.declaration.function.constructor.dart
+        2: entity.name.function.constructor.dart
+
+    - match: '\b(factory)(?:\s+({{lower_identifier}}))?(?=\s*\()'
+      captures:
+        1: storage.modifier.factory.dart
+        2: entity.name.function.constructor.dart
+
+    - match: '\b(get|set)\s+({{identifier}})\b'
+      captures:
+        1: keyword.declaration.function.dart
+        2: entity.name.function.accessor.dart
+
+    - match: |-
+        (?x)
+        \b(operator)\s*
+        (\[\]=?|==|>>>|>>|<<|<=|>=|<|>|~/|~|\+|-|\*|/|%|&|\||\^)
+      captures:
+        1: keyword.declaration.function.dart
+        2: entity.name.function.operator.dart
+
+  annotations:
+    - match: '(@)({{identifier}}(?:\s*\.\s*{{identifier}})*)'
+      captures:
+        1: punctuation.definition.annotation.dart
+        2: variable.annotation.dart
+      push: maybe-type-arguments
+
+  strings:
+    # Raw strings must be tested before ordinary strings.
+    - match: "(?<![A-Za-z0-9_])(r)(''')"
+      captures:
+        1: storage.modifier.string.raw.dart
+        2: punctuation.definition.string.begin.dart
+      push: raw-triple-single-quoted-string
+
+    - match: '(?<![A-Za-z0-9_])(r)(""")'
+      captures:
+        1: storage.modifier.string.raw.dart
+        2: punctuation.definition.string.begin.dart
+      push: raw-triple-double-quoted-string
+
+    - match: "(?<![A-Za-z0-9_])(r)(')"
+      captures:
+        1: storage.modifier.string.raw.dart
+        2: punctuation.definition.string.begin.dart
+      push: raw-single-quoted-string
+
+    - match: '(?<![A-Za-z0-9_])(r)(")'
+      captures:
+        1: storage.modifier.string.raw.dart
+        2: punctuation.definition.string.begin.dart
+      push: raw-double-quoted-string
+
+    - match: "'''"
+      scope: punctuation.definition.string.begin.dart
+      push: triple-single-quoted-string
+
+    - match: '"""'
+      scope: punctuation.definition.string.begin.dart
+      push: triple-double-quoted-string
+
+    - match: "'"
+      scope: punctuation.definition.string.begin.dart
+      push: single-quoted-string
+
+    - match: '"'
+      scope: punctuation.definition.string.begin.dart
+      push: double-quoted-string
+
+  string-escapes:
+    - match: '\\(?:u\{[0-9A-Fa-f]{1,6}\}|u[0-9A-Fa-f]{4}|x[0-9A-Fa-f]{2}|.)'
+      scope: constant.character.escape.dart
+
+  string-interpolation:
+    - match: '(\$)({{identifier}})'
+      captures:
+        1: punctuation.definition.variable.dart
+        2: variable.other.interpolation.dart
+    - match: '\$\{'
+      scope: punctuation.section.interpolation.begin.dart
+      push: interpolation-expression
+
+  string-uri-parts:
+    - match: '\b(?:dart|file|https?|package):'
+      scope: constant.other.uri-scheme.dart
+
+  single-quoted-string:
+    - meta_scope: string.quoted.single.dart
+    - match: "'"
+      scope: punctuation.definition.string.end.dart
+      pop: true
+    - include: string-escapes
+    - include: string-interpolation
+    - include: string-uri-parts
+    - match: '$'
+      pop: true
+
+  double-quoted-string:
+    - meta_scope: string.quoted.double.dart
+    - match: '"'
+      scope: punctuation.definition.string.end.dart
+      pop: true
+    - include: string-escapes
+    - include: string-interpolation
+    - include: string-uri-parts
+    - match: '$'
+      pop: true
+
+  triple-single-quoted-string:
+    - meta_scope: string.quoted.single.block.dart
+    - match: "'''"
+      scope: punctuation.definition.string.end.dart
+      pop: true
+    - include: string-escapes
+    - include: string-interpolation
+    - include: string-uri-parts
+
+  triple-double-quoted-string:
+    - meta_scope: string.quoted.double.block.dart
+    - match: '"""'
+      scope: punctuation.definition.string.end.dart
+      pop: true
+    - include: string-escapes
+    - include: string-interpolation
+    - include: string-uri-parts
+
+  raw-single-quoted-string:
+    - meta_scope: string.quoted.single.raw.dart
+    - match: "'"
+      scope: punctuation.definition.string.end.dart
+      pop: true
+    - include: string-uri-parts
+    - match: '$'
+      pop: true
+
+  raw-double-quoted-string:
+    - meta_scope: string.quoted.double.raw.dart
+    - match: '"'
+      scope: punctuation.definition.string.end.dart
+      pop: true
+    - include: string-uri-parts
+    - match: '$'
+      pop: true
+
+  raw-triple-single-quoted-string:
+    - meta_scope: string.quoted.single.block.raw.dart
+    - match: "'''"
+      scope: punctuation.definition.string.end.dart
+      pop: true
+    - include: string-uri-parts
+
+  raw-triple-double-quoted-string:
+    - meta_scope: string.quoted.double.block.raw.dart
+    - match: '"""'
+      scope: punctuation.definition.string.end.dart
+      pop: true
+    - include: string-uri-parts
+
+  interpolation-expression:
+    - meta_scope: meta.interpolation.dart
+    - match: '\}'
+      scope: punctuation.section.interpolation.end.dart
+      pop: true
+    - include: code
+
+  numbers:
+    - match: |-
+        (?x)
+        (?<![A-Za-z0-9_])
+        0[xX]{{hexadecimal_digits}}
+        (?![A-Za-z0-9_])
+      scope: constant.numeric.integer.hexadecimal.dart
+
+    - match: |-
+        (?x)
+        (?<![A-Za-z0-9_])
+        (?:
+          {{decimal_digits}}\.(?!\.)(?:{{decimal_digits}})?(?:{{exponent}})?
+          | \.{{decimal_digits}}(?:{{exponent}})?
+          | {{decimal_digits}}{{exponent}}
+        )
+        (?![A-Za-z0-9_])
+      scope: constant.numeric.float.dart
+
+    - match: '(?<![A-Za-z0-9_]){{decimal_digits}}(?![A-Za-z0-9_])'
+      scope: constant.numeric.integer.decimal.dart
+
+  literals-and-language-variables:
+    - match: '\b(?:false|null|true)\b'
+      scope: constant.language.dart
+    - match: '\b(?:super|this)\b'
+      scope: variable.language.dart
+    - match: '\$[1-9][0-9]*\b'
+      scope: variable.other.member.record.dart
+    - match: '(?<![A-Za-z0-9_])_(?![A-Za-z0-9_])'
+      scope: variable.language.wildcard.dart
+
+  keywords:
+    - match: '\b(?:import|export|part|library)\b'
+      scope: keyword.control.import.dart
+
+    - match: '\b(?:deferred|hide|show)\b'
+      scope: keyword.control.import.dart
+
+    - match: '\b(?:assert|await|break|case|catch|continue|default|do|else|finally|for|if|rethrow|return|switch|throw|try|when|while)\b'
+      scope: keyword.control.dart
+
+    - match: '\b(yield)\b\s*(\*)?'
+      captures:
+        1: keyword.control.dart
+        2: keyword.operator.generator.dart
+
+    - match: '\b(async|sync)\b\s*(\*)?'
+      captures:
+        1: storage.modifier.async.dart
+        2: keyword.operator.generator.dart
+
+    - match: '\b(?:abstract|augment|base|const|covariant|external|factory|final|interface|late|required|sealed|static)\b'
+      scope: storage.modifier.dart
+
+    - match: '\b(?:extends|implements|on|with)\b'
+      scope: keyword.declaration.type.dart
+
+    - match: '\b(?:class|enum|extension|mixin|typedef|type)\b'
+      scope: keyword.declaration.type.dart
+
+    - match: '\b(?:get|operator|set)\b'
+      scope: keyword.declaration.function.dart
+
+    - match: '\b(?:new)\b'
+      scope: keyword.other.new.dart
+
+    - match: '\b(?:var)\b'
+      scope: storage.type.inferred.dart
+
+    - match: '\b(?:as)\b'
+      scope: keyword.operator.word.cast.dart
+
+    - match: '\b(?:is)(?:\s*!|\b)'
+      scope: keyword.operator.word.type-test.dart
+
+    - match: '\b(?:in)\b'
+      scope: keyword.operator.word.dart
+
+  function-declarations:
+    # Typed function and method declarations. These rules also provide useful
+    # entity scopes for Sublime's symbol index without requiring a plugin.
+    - match: |-
+        (?x)
+        \b({{primitive_type}}|{{core_type}})
+        (\s*<[^;={}()]*>)?
+        (\s*\?)?
+        \s+({{identifier}})
+        (?=\s*(?:<[^;={}()]*>)?\s*\()
+      captures:
+        1: support.type.builtin.dart
+        2: meta.generic.dart
+        3: storage.modifier.nullable.dart
+        4: entity.name.function.dart
+
+    - match: |-
+        (?x)
+        \b({{type_identifier}})
+        (\s*<[^;={}()]*>)?
+        (\s*\?)?
+        \s+({{identifier}})
+        (?=\s*(?:<[^;={}()]*>)?\s*\()
+      captures:
+        1: support.class.dart
+        2: meta.generic.dart
+        3: storage.modifier.nullable.dart
+        4: entity.name.function.dart
+
+  member-access:
+    # Generic method calls, including null-aware access and cascades.
+    - match: |-
+        (?x)
+        (\?\.\.|\.\.|\?\.|\.)
+        ({{identifier}})
+        (?=\s*<[^;={}()]*>\s*\()
+      captures:
+        1: keyword.operator.accessor.dart
+        2: variable.function.dart
+      push: maybe-type-arguments
+
+    - match: '(\?\.\.|\.\.|\?\.|\.)({{identifier}})(?=\s*\()'
+      captures:
+        1: keyword.operator.accessor.dart
+        2: variable.function.dart
+
+    - match: '(\?\.\.|\.\.|\?\.|\.)(\$[1-9][0-9]*)\b'
+      captures:
+        1: keyword.operator.accessor.dart
+        2: variable.other.member.record.dart
+
+    - match: '(\?\.\.|\.\.|\?\.|\.)({{identifier}})\b'
+      captures:
+        1: keyword.operator.accessor.dart
+        2: variable.other.member.dart
+
+  calls-and-types:
+    # Generic collection literals: <String>[], <String, int>{...}.
+    - match: '<(?=\s*(?:{{primitive_type}}|{{core_type}}|{{type_identifier}})\b[^;\n]*>\s*[\[\{])'
+      scope: punctuation.definition.generic.begin.dart
+      push: type-arguments
+
+    # Generic invocations of lower-case or otherwise non-type identifiers.
+    - match: '\b({{identifier}})\b(?=\s*<[^;={}()]*>\s*\()'
+      scope: variable.function.dart
+      push: maybe-type-arguments
+
+    # A PascalCase identifier followed by type arguments is a type by Dart
+    # convention. This naturally covers Flutter widgets and SDK classes.
+    - match: '\b{{type_identifier}}\b(?=\s*<)'
+      scope: support.class.dart
+      push: maybe-type-arguments
+
+    - match: '\b(?:{{primitive_type}}|{{core_type}})\b'
+      scope: support.type.builtin.dart
+
+    - match: '\b{{type_identifier}}\b(?=\s*\()'
+      scope: support.class.constructor.dart
+
+    - match: '\b{{identifier}}\b(?=\s*\()'
+      scope: variable.function.dart
+
+    - match: '\b{{type_identifier}}\b'
+      scope: support.class.dart
+
+  maybe-type-arguments:
+    - match: '<'
+      scope: punctuation.definition.generic.begin.dart
+      set: type-arguments
+    - match: '(?=\S)'
+      pop: true
+
+  type-arguments:
+    - meta_scope: meta.generic.dart
+    - match: '>'
+      scope: punctuation.definition.generic.end.dart
+      pop: true
+    - include: code
+
+  symbols:
+    - match: '#(?:{{identifier}}(?:\.{{identifier}})*|\[\]=?|==|>>>|>>|<<|<=|>=|<|>|~/|~|\+|-|\*|/|%|&|\||\^)'
+      scope: constant.other.symbol.dart
+
+  named-fields:
+    # Covers Flutter named arguments, named parameters/record fields, and map
+    # entries whose keys are identifier constants. A ternary expression whose
+    # middle operand is a bare identifier is the main unavoidable ambiguity.
+    - match: '\b({{identifier}})(\s*)(:)(?!:)'
+      captures:
+        1: variable.parameter.named.dart
+        3: punctuation.separator.key-value.dart
+
+  operators:
+    - match: '\.\.\.(?:\?)?'
+      scope: keyword.operator.spread.dart
+
+    - match: '\?\.\.|\.\.'
+      scope: keyword.operator.cascade.dart
+
+    - match: '\?\?=|>>>=|>>=|<<=|~/=|\+=|-=|\*=|/=|%=|&=|\|=|\^=|='
+      scope: keyword.operator.assignment.dart
+
+    - match: '=>'
+      scope: keyword.operator.arrow.dart
+
+    - match: '(?:===|!==)'
+      scope: invalid.illegal.operator.dart
+
+    - match: '==|!=|<=|>=|<|>'
+      scope: keyword.operator.comparison.dart
+
+    - match: '\?\?|\?(?=\[)|\?\.'
+      scope: keyword.operator.null-aware.dart
+
+    - match: '&&|\|\||!'
+      scope: keyword.operator.logical.dart
+
+    - match: '>>>|>>|<<|&|\||\^|~'
+      scope: keyword.operator.bitwise.dart
+
+    - match: '\+\+|--|~/|\+|-|\*|/|%'
+      scope: keyword.operator.arithmetic.dart
+
+    - match: '\?'
+      scope: keyword.operator.ternary-or-nullable.dart
+
+    - match: '\.'
+      scope: keyword.operator.accessor.dart
+
+  brackets:
+    - match: '\('
+      scope: punctuation.section.group.begin.dart
+      push: parentheses
+    - match: '\['
+      scope: punctuation.section.brackets.begin.dart
+      push: square-brackets
+    - match: '\{'
+      scope: punctuation.section.block.begin.dart
+      push: braces
+    - match: '[\)\]\}]'
+      scope: invalid.illegal.stray-bracket-end.dart
+
+  parentheses:
+    - meta_scope: meta.group.dart
+    - match: '\)'
+      scope: punctuation.section.group.end.dart
+      pop: true
+    - include: code
+
+  square-brackets:
+    - meta_scope: meta.sequence.dart
+    - match: '\]'
+      scope: punctuation.section.brackets.end.dart
+      pop: true
+    - include: code
+
+  braces:
+    - meta_scope: meta.block.dart
+    - match: '\}'
+      scope: punctuation.section.block.end.dart
+      pop: true
+    - include: code
+
+  punctuation:
+    - match: ';'
+      scope: punctuation.terminator.statement.dart
+    - match: ','
+      scope: punctuation.separator.sequence.dart
+    - match: ':'
+      scope: punctuation.separator.colon.dart
+
+  identifiers:
+    - match: '\b_[A-Za-z0-9_]+\b'
+      scope: variable.other.private.dart
+    - match: '\b{{identifier}}\b'
+      scope: variable.other.dart
