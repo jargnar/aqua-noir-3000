@@ -1,0 +1,33 @@
+{
+    "theme": "Aqua Noir 3000.sublime-theme",
+    "color_scheme": "Aqua Noir 3000.sublime-color-scheme",
+    "font_face": "JetBrains Mono",
+    "font_size": 13,
+    "line_padding_top": 2,
+    "line_padding_bottom": 2,
+    "highlight_line": true,
+    "draw_indent_guides": true,
+    "indent_guide_options": [
+        "draw_normal",
+        "draw_active"
+    ],
+    "caret_style": "solid",
+    "highlight_modified_tabs": true,
+    "show_tab_close_buttons": true,
+    "hide_tab_scrolling_buttons": false,
+    "themed_title_bar": true,
+    "animation_enabled": false,
+    "tree_animation_enabled": false,
+    "inactive_sheet_dimming": false,
+    "bold_folder_labels": false,
+    "draw_minimap_border": false,
+    "hardware_acceleration": "opengl",
+    "overlay_scroll_bars": "enabled",
+    "scroll_speed": 0.0,
+    "preview_on_click": "only_left",
+    "show_git_status": false,
+    "mini_diff": false,
+    "index_files": true,
+    "auto_complete_use_index": true,
+    "show_definitions": true
+}
