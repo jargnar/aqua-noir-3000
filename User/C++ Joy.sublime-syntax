@@ -1,0 +1,379 @@
+%YAML 1.2
+---
+name: C++ Joy
+scope: source.c++.joy
+version: 2
+extends: Packages/C++/C++.sublime-syntax
+file_extensions:
+  - cpp
+  - cc
+  - cp
+  - cxx
+  - c++
+  - C
+  - h
+  - hh
+  - hpp
+  - hxx
+  - h++
+  - inl
+  - ipp
+  - tpp
+  - ixx
+  - cppm
+  - ii
+  - ino
+first_line_match: |-
+  (?xi:
+    ^ \s* // .*? -\*- .*? \b(c\+\+|cpp\b) .*? -\*-
+  )
+
+# C++ Joy inherits Sublime Text's maintained C++ parser and adds a semantic
+# layer for ownership, constant evaluation, templates, concepts, coroutines,
+# exceptions, modules, standard-library families, member intent and docs.
+
+variables:
+  joy_cpp_integer_types: '(?:bool|char|signed|unsigned|short|int|long|wchar_t|char8_t|char16_t|char32_t)'
+  joy_cpp_float_types: '(?:float|double)'
+  joy_cpp_text_types: '(?:string|string_view|wstring|wstring_view|u8string|u8string_view|u16string|u16string_view|u32string|u32string_view|basic_string|basic_string_view|spanstream|stringstream|istringstream|ostringstream)'
+  joy_cpp_sequence_types: '(?:array|vector|deque|list|forward_list|span|mdspan|inplace_vector)'
+  joy_cpp_associative_types: '(?:set|multiset|map|multimap|unordered_set|unordered_multiset|unordered_map|unordered_multimap)'
+  joy_cpp_adapter_types: '(?:stack|queue|priority_queue)'
+  joy_cpp_ownership_types: '(?:unique_ptr|shared_ptr|weak_ptr|enable_shared_from_this|allocator|polymorphic_allocator|observer_ptr)'
+  joy_cpp_sum_types: '(?:optional|variant|any|expected|unexpected|monostate|reference_wrapper|tuple|pair)'
+  joy_cpp_callable_types: '(?:function|move_only_function|copyable_function|function_ref|bind_front|bind_back)'
+  joy_cpp_concurrency_types: '(?:thread|jthread|stop_token|stop_source|stop_callback|mutex|timed_mutex|recursive_mutex|recursive_timed_mutex|shared_mutex|shared_timed_mutex|lock_guard|unique_lock|shared_lock|scoped_lock|condition_variable|condition_variable_any|semaphore|latch|barrier|future|shared_future|promise|packaged_task|atomic|atomic_ref)'
+  joy_cpp_ranges_types: '(?:range|view|subrange|ref_view|owning_view|filter_view|transform_view|take_view|drop_view|split_view|join_view|zip_view|enumerate_view|generator)'
+  joy_cpp_error_types: '(?:exception|error_code|error_condition|system_error|runtime_error|logic_error|invalid_argument|out_of_range|bad_alloc|bad_cast|bad_optional_access|bad_variant_access|source_location|stacktrace)'
+  joy_cpp_time_types: '(?:duration|time_point|system_clock|steady_clock|high_resolution_clock|year|month|day|year_month_day|zoned_time)'
+  joy_cpp_numeric_types: '(?:complex|valarray|ratio|bitset|simd)'
+  joy_cpp_concept_types: '(?:same_as|derived_from|convertible_to|common_reference_with|common_with|integral|signed_integral|unsigned_integral|floating_point|assignable_from|swappable|destructible|constructible_from|default_initializable|move_constructible|copy_constructible|equality_comparable|totally_ordered|invocable|regular_invocable|predicate|relation|equivalence_relation|strict_weak_order|movable|copyable|semiregular|regular)'
+
+  joy_cpp_memory_functions: '(?:make_unique|make_unique_for_overwrite|make_shared|make_shared_for_overwrite|allocate_shared|to_address|construct_at|destroy_at|uninitialized_copy|uninitialized_move|uninitialized_fill|uninitialized_value_construct)'
+  joy_cpp_algorithm_functions: '(?:all_of|any_of|none_of|for_each|find|find_if|find_if_not|count|count_if|mismatch|equal|search|copy|copy_if|copy_n|transform|replace|fill|generate|remove|remove_if|unique|reverse|rotate|shuffle|sample|partition|sort|stable_sort|partial_sort|nth_element|lower_bound|upper_bound|equal_range|binary_search|merge|includes|set_union|set_intersection|set_difference|min|max|minmax|clamp|lexicographical_compare)'
+  joy_cpp_range_functions: '(?:begin|end|cbegin|cend|rbegin|rend|size|ssize|empty|data|distance|advance|next|prev)'
+  joy_cpp_utility_functions: '(?:move|forward|swap|exchange|as_const|make_pair|make_tuple|tie|apply|invoke|visit|get|get_if|holds_alternative|make_from_tuple)'
+  joy_cpp_io_functions: '(?:print|println|format|format_to|vformat|to_chars|from_chars|getline|flush|sync_with_stdio)'
+  joy_cpp_concurrency_functions: '(?:async|launch|this_thread|yield|sleep_for|sleep_until|call_once|lock|try_lock|atomic_wait|atomic_notify_one|atomic_notify_all)'
+  joy_cpp_numeric_functions: '(?:accumulate|reduce|transform_reduce|inner_product|partial_sum|exclusive_scan|inclusive_scan|iota|gcd|lcm|midpoint|lerp|abs|sqrt|pow|sin|cos|tan|exp|log)'
+  joy_cpp_view_adaptors: '(?:all|filter|transform|take|take_while|drop|drop_while|join|split|lazy_split|common|reverse|elements|keys|values|zip|zip_transform|adjacent|adjacent_transform|pairwise|chunk|chunk_by|slide|stride|cartesian_product|as_const|as_rvalue|enumerate|repeat|iota|single|empty)'
+  joy_cpp_thread_functions: '(?:get_id|yield|sleep_for|sleep_until)'
+  joy_cpp_time_functions: '(?:duration_cast|time_point_cast|floor|ceil|round|abs)'
+  joy_cpp_io_objects: '(?:cin|cout|cerr|clog|wcin|wcout|wcerr|wclog)'
+  joy_cpp_call_lookahead: '[ \t]*(?:<[^(){};\n]+>)?[ \t]*\('
+
+  joy_cpp_observer_members: '(?:size|ssize|empty|capacity|max_size|data|front|back|begin|end|cbegin|cend|rbegin|rend|get|value|value_or|has_value|index|contains|count|find|lower_bound|upper_bound|use_count|expired|owns_lock|joinable|stop_requested|valid)'
+  joy_cpp_mutator_members: '(?:push_back|push_front|pop_back|pop_front|emplace|emplace_back|emplace_front|insert|insert_or_assign|try_emplace|erase|erase_if|clear|reserve|resize|shrink_to_fit|assign|append|replace|reset|release|swap|lock|try_lock|unlock|wait|notify_one|notify_all|request_stop|join|detach)'
+
+  joy_cpp_critical_marker: '(?:ALERT|ATTENTION|CAUTION|CRITICAL|DANGER|SECURITY)'
+  joy_cpp_warning_marker: '(?:BUG|DEPRECATED|FIXME|HACK|TASK|TBD|TODO|WARNING)'
+  joy_cpp_notice_marker: '(?:INFO|NOTE|NOTICE|PERF|TEST|TESTING)'
+
+contexts:
+  unique-modifiers:
+    - meta_prepend: true
+    - match: '\b(consteval|constexpr|constinit)\b'
+      scope: storage.modifier.constant-evaluation.c++.joy
+    - match: '\b(const|volatile|mutable)\b'
+      scope: storage.modifier.cv.c++.joy
+    - match: '\b(static|extern|thread_local|inline|export|register)\b'
+      scope: storage.modifier.linkage.c++.joy
+    - match: '\b(virtual|override|final|explicit|friend)\b'
+      scope: storage.modifier.object-model.c++.joy
+
+  function-specifiers:
+    - meta_prepend: true
+    - match: '\b(consteval|constexpr)\b'
+      scope: storage.modifier.constant-evaluation.c++.joy
+    - match: '\b(const|volatile|mutable)\b'
+      scope: storage.modifier.cv.c++.joy
+    - match: '\b(noexcept)\b'
+      scope: storage.modifier.exception-contract.c++.joy
+    - match: '\b(override|final)\b'
+      scope: storage.modifier.object-model.c++.joy
+
+  unique-keywords:
+    - meta_prepend: true
+    - match: '\b(co_await|co_yield|co_return)\b'
+      scope: keyword.control.coroutine.c++.joy
+    - match: '\b(try|catch|throw)\b'
+      scope: keyword.control.exception.c++.joy
+    - match: '\b(return)\b'
+      scope: keyword.control.flow.return.c++.joy
+    - match: '\b(new|delete)\b'
+      scope: keyword.operator.memory.c++.joy
+    - match: '\b(static_cast|dynamic_cast|const_cast|reinterpret_cast)\b'
+      scope: keyword.operator.cast.c++.joy
+    - match: '\b(requires)\b'
+      scope: keyword.operator.constraint.c++.joy
+    - match: '\b(typeid|decltype|sizeof|alignof|noexcept)\b'
+      scope: keyword.operator.introspection.c++.joy
+
+  unique-types:
+    - meta_prepend: true
+    - match: '\b(concept)\b'
+      scope: keyword.declaration.concept.c++.joy
+    - match: '\b(class|struct|union)\b'
+      scope: keyword.declaration.type.c++.joy
+    - match: '\b(enum)(?:\s+(class|struct))?\b'
+      captures:
+        1: keyword.declaration.enum.c++.joy
+        2: storage.modifier.scoped-enum.c++.joy
+
+  types:
+    - meta_prepend: true
+    - match: '\b({{joy_cpp_float_types}})\b'
+      scope: support.type.scalar.floating.c++.joy
+    - match: '\b({{joy_cpp_integer_types}})\b'
+      scope: support.type.scalar.integer.c++.joy
+    - match: '\b(void|auto)\b'
+      scope: support.type.deduced-or-void.c++.joy
+    - match: '\b({{joy_cpp_text_types}})\b'
+      scope: support.type.standard.text.c++.joy
+    - match: '\b({{joy_cpp_sequence_types}}|{{joy_cpp_associative_types}}|{{joy_cpp_adapter_types}})\b'
+      scope: support.type.standard.container.c++.joy
+    - match: '\b({{joy_cpp_ownership_types}})\b'
+      scope: support.type.standard.ownership.c++.joy
+    - match: '\b({{joy_cpp_sum_types}})\b'
+      scope: support.type.standard.sum.c++.joy
+    - match: '\b({{joy_cpp_callable_types}})\b'
+      scope: support.type.standard.callable.c++.joy
+    - match: '\b({{joy_cpp_concurrency_types}})\b'
+      scope: support.type.standard.concurrency.c++.joy
+    - match: '\b({{joy_cpp_ranges_types}})\b'
+      scope: support.type.standard.ranges.c++.joy
+    - match: '\b({{joy_cpp_error_types}})\b'
+      scope: support.type.standard.error.c++.joy
+    - match: '\b({{joy_cpp_time_types}})\b'
+      scope: support.type.standard.time.c++.joy
+    - match: '\b({{joy_cpp_numeric_types}})\b'
+      scope: support.type.standard.numeric.c++.joy
+    - match: '\b({{joy_cpp_concept_types}})\b'
+      scope: support.type.standard.concept.c++.joy
+    - match: '\b(u?int(?:8|16|32|64)_t|u?int_(?:least|fast)(?:8|16|32|64)_t|u?intptr_t|u?intmax_t|size_t|ptrdiff_t|max_align_t)\b'
+      scope: support.type.standard.fixed-width.c++.joy
+
+  unique-variables:
+    - meta_prepend: true
+    - match: '\b(this)\b'
+      scope: variable.language.this.c++.joy
+    - match: '\b(m_[[:alnum:]_]+|[fm][[:upper:]][[:alnum:]_]*)\b'
+      scope: variable.other.member.convention.c++.joy
+
+  unique-constants:
+    - meta_prepend: true
+    - match: '\b(nullptr)\b'
+      scope: constant.language.null.c++.joy
+    - match: '\b(true|false)\b'
+      scope: constant.language.boolean.c++.joy
+    - match: '\b(npos|dynamic_extent|unreachable_sentinel|default_sentinel|nullopt|in_place|in_place_type|in_place_index|memory_order_(?:relaxed|consume|acquire|release|acq_rel|seq_cst))\b'
+      scope: support.constant.standard.c++.joy
+
+  identifiers:
+    - meta_prepend: true
+    - match: '\b(std)(\s*::)({{joy_cpp_io_objects}})\b'
+      captures:
+        1: entity.name.namespace.standard.c++.joy
+        2: punctuation.accessor.double-colon.c++.joy
+        3: support.variable.standard.io.c++.joy
+    - match: '\b(std)(\s*::)'
+      captures:
+        1: entity.name.namespace.standard.c++.joy
+        2: punctuation.accessor.double-colon.c++.joy
+    - match: '\b(ranges|views|chrono|filesystem|literals|this_thread|numbers|execution)(\s*::)'
+      captures:
+        1: entity.name.namespace.library.c++.joy
+        2: punctuation.accessor.double-colon.c++.joy
+    - match: '\b([A-Z])\b(?=\s*[,>=])'
+      scope: variable.parameter.template.c++.joy
+
+  function-call:
+    - meta_prepend: true
+    - match: '\b(std)(::)(ranges)(::)({{joy_cpp_algorithm_functions}})(?={{joy_cpp_call_lookahead}})'
+      captures:
+        1: entity.name.namespace.standard.c++.joy
+        2: punctuation.accessor.double-colon.c++.joy
+        3: entity.name.namespace.library.c++.joy
+        4: punctuation.accessor.double-colon.c++.joy
+        5: support.function.algorithm.c++.joy
+    - match: '\b(std)(::)(views)(::)({{joy_cpp_view_adaptors}})(?={{joy_cpp_call_lookahead}})'
+      captures:
+        1: entity.name.namespace.standard.c++.joy
+        2: punctuation.accessor.double-colon.c++.joy
+        3: entity.name.namespace.library.c++.joy
+        4: punctuation.accessor.double-colon.c++.joy
+        5: support.function.range.c++.joy
+    - match: '\b(std)(::)(this_thread)(::)({{joy_cpp_thread_functions}})(?={{joy_cpp_call_lookahead}})'
+      captures:
+        1: entity.name.namespace.standard.c++.joy
+        2: punctuation.accessor.double-colon.c++.joy
+        3: entity.name.namespace.library.c++.joy
+        4: punctuation.accessor.double-colon.c++.joy
+        5: support.function.concurrency.c++.joy
+    - match: '\b(std)(::)(chrono)(::)({{joy_cpp_time_functions}})(?={{joy_cpp_call_lookahead}})'
+      captures:
+        1: entity.name.namespace.standard.c++.joy
+        2: punctuation.accessor.double-colon.c++.joy
+        3: entity.name.namespace.library.c++.joy
+        4: punctuation.accessor.double-colon.c++.joy
+        5: support.function.time.c++.joy
+    - match: '\b(std)(::)({{joy_cpp_memory_functions}})(?={{joy_cpp_call_lookahead}})'
+      captures:
+        1: entity.name.namespace.standard.c++.joy
+        2: punctuation.accessor.double-colon.c++.joy
+        3: support.function.memory.c++.joy
+    - match: '\b(std)(::)({{joy_cpp_algorithm_functions}})(?={{joy_cpp_call_lookahead}})'
+      captures:
+        1: entity.name.namespace.standard.c++.joy
+        2: punctuation.accessor.double-colon.c++.joy
+        3: support.function.algorithm.c++.joy
+    - match: '\b(std)(::)({{joy_cpp_range_functions}})(?={{joy_cpp_call_lookahead}})'
+      captures:
+        1: entity.name.namespace.standard.c++.joy
+        2: punctuation.accessor.double-colon.c++.joy
+        3: support.function.range.c++.joy
+    - match: '\b(std)(::)({{joy_cpp_utility_functions}})(?={{joy_cpp_call_lookahead}})'
+      captures:
+        1: entity.name.namespace.standard.c++.joy
+        2: punctuation.accessor.double-colon.c++.joy
+        3: support.function.utility.c++.joy
+    - match: '\b(std)(::)({{joy_cpp_io_functions}})(?={{joy_cpp_call_lookahead}})'
+      captures:
+        1: entity.name.namespace.standard.c++.joy
+        2: punctuation.accessor.double-colon.c++.joy
+        3: support.function.io.c++.joy
+    - match: '\b(std)(::)({{joy_cpp_concurrency_functions}})(?={{joy_cpp_call_lookahead}})'
+      captures:
+        1: entity.name.namespace.standard.c++.joy
+        2: punctuation.accessor.double-colon.c++.joy
+        3: support.function.concurrency.c++.joy
+    - match: '\b(std)(::)({{joy_cpp_numeric_functions}})(?={{joy_cpp_call_lookahead}})'
+      captures:
+        1: entity.name.namespace.standard.c++.joy
+        2: punctuation.accessor.double-colon.c++.joy
+        3: support.function.numeric.c++.joy
+    - match: '\b({{joy_cpp_memory_functions}})(?={{joy_cpp_call_lookahead}})'
+      scope: support.function.memory.c++.joy
+    - match: '\b({{joy_cpp_algorithm_functions}})(?={{joy_cpp_call_lookahead}})'
+      scope: support.function.algorithm.c++.joy
+    - match: '\b({{joy_cpp_utility_functions}})(?={{joy_cpp_call_lookahead}})'
+      scope: support.function.utility.c++.joy
+
+  members-after-accessor-junction:
+    - meta_prepend: true
+    - match: '({{joy_cpp_observer_members}})\s*(\()'
+      captures:
+        0: meta.method-call.c++
+        1: variable.function.member.observer.c++.joy
+        2: meta.group.c++ punctuation.section.group.begin.c++
+      set: members-inside-function-call
+    - match: '({{joy_cpp_mutator_members}})\s*(\()'
+      captures:
+        0: meta.method-call.c++
+        1: variable.function.member.mutator.c++.joy
+        2: meta.group.c++ punctuation.section.group.begin.c++
+      set: members-inside-function-call
+
+  attribute_list:
+    - meta_prepend: true
+    - match: '\b(nodiscard|deprecated|maybe_unused|fallthrough|likely|unlikely)\b'
+      scope: storage.modifier.attribute.intent.c++.joy
+    - match: '\b(no_unique_address|assume|carries_dependency|indeterminate)\b'
+      scope: storage.modifier.attribute.low-level.c++.joy
+
+  preprocessor-macro-definition:
+    - meta_prepend: true
+    - match: '##'
+      scope: keyword.operator.token-paste.preprocessor.c++.joy
+    - match: '#(?=[[:alpha:]_])'
+      scope: keyword.operator.stringification.preprocessor.c++.joy
+    - match: '\b(__VA_ARGS__|__VA_OPT__)\b'
+      scope: variable.language.variadic.preprocessor.c++.joy
+    - match: '\b[A-Z][A-Z0-9_]{2,}\b'
+      scope: constant.other.macro-reference.c++.joy
+
+  # C++ references the C syntax's comment contexts directly. Intercepting the
+  # delimiters here gives this child syntax its own comment semantics.
+  comments:
+    - meta_prepend: true
+    - match: '///|//!'
+      scope: punctuation.definition.comment.documentation.c++.joy
+      push: cpp-documentation-line-body
+    - match: '//'
+      scope: punctuation.definition.comment.c++.joy
+      push: cpp-line-comment-body
+    - match: '/\*\*|/\*!'
+      scope: punctuation.definition.comment.documentation.c++.joy
+      push: cpp-documentation-block-body
+    - match: '/\*'
+      scope: punctuation.definition.comment.c++.joy
+      push: cpp-block-comment-body
+
+  global-block-comments:
+    - meta_prepend: true
+    - match: '^(/\*) =\s*(.*?)\s*= (\*/)$\n?'
+      scope: comment.block.banner.c++.joy
+      captures:
+        1: punctuation.definition.comment.c++.joy
+        2: meta.toc-list.banner.block.c++.joy
+        3: punctuation.definition.comment.end.c++.joy
+    - match: '/\*\*|/\*!'
+      scope: punctuation.definition.comment.documentation.c++.joy
+      push:
+        - global-block-comment-after
+        - cpp-documentation-block-body
+    - match: '/\*'
+      scope: punctuation.definition.comment.c++.joy
+      push:
+        - global-block-comment-after
+        - cpp-block-comment-body
+
+  cpp-line-comment-body:
+    - meta_include_prototype: false
+    - meta_scope: comment.line.double-slash.c++.joy
+    - match: '$'
+      pop: true
+    - include: cpp-comment-content
+
+  cpp-documentation-line-body:
+    - meta_include_prototype: false
+    - meta_scope: comment.line.documentation.c++.joy
+    - match: '$'
+      pop: true
+    - include: cpp-documentation-content
+    - include: cpp-comment-content
+
+  cpp-block-comment-body:
+    - meta_include_prototype: false
+    - meta_scope: comment.block.c++.joy
+    - match: '\*/'
+      scope: punctuation.definition.comment.end.c++.joy
+      pop: true
+    - include: cpp-comment-content
+
+  cpp-documentation-block-body:
+    - meta_include_prototype: false
+    - meta_scope: comment.block.documentation.c++.joy
+    - match: '\*/'
+      scope: punctuation.definition.comment.end.c++.joy
+      pop: true
+    - include: cpp-documentation-content
+    - include: cpp-comment-content
+
+  cpp-comment-content:
+    - match: '\b{{joy_cpp_critical_marker}}\b(?=:|\b)'
+      scope: markup.warning.critical.comment.c++.joy
+    - match: '\b{{joy_cpp_warning_marker}}\b(?=:|\b)'
+      scope: markup.warning.comment.c++.joy
+    - match: '\b{{joy_cpp_notice_marker}}\b(?=:|\b)'
+      scope: markup.note.comment.c++.joy
+    - match: '(?:https?|ftp)://[^\s<>\])}]+'
+      scope: markup.underline.link.c++.joy
+
+  cpp-documentation-content:
+    - match: '(?<![[:alnum:]_])(@|\\)(brief|details|param|tparam|return|returns|retval|throws|exception|pre|post|invariant|note|warning|attention|deprecated|since|see|sa|code|endcode|file|author|version|copyright)\b'
+      captures:
+        1: punctuation.definition.documentation.c++.joy
+        2: keyword.other.documentation.c++.joy
+    - match: '`[^`\n]+`'
+      scope: markup.raw.inline.documentation.c++.joy
