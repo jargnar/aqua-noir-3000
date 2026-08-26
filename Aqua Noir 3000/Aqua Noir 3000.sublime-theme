@@ -2,7 +2,7 @@
     "extends": "Adaptive.sublime-theme",
     "variables": {
         "aqua_noir_bg": "#07080A",
-        "aqua_noir_title": "#07080A",
+        "aqua_noir_title": "#121A20",
         "aqua_noir_panel": "#0B0C0F",
         "aqua_noir_surface": "#111218",
         "aqua_noir_surface_2": "#171820",
@@ -31,14 +31,16 @@
         "aqua_noir_aqua_deep": "#123240",
         "aqua_noir_aqua_deep_hover": "#194455",
         "aqua_noir_aqua_pressed": "#0C222D",
-        "aqua_noir_tab_active": "#121A20",
-        "aqua_noir_tab_active_hover": "#17232B"
+        "aqua_noir_tab_well": "#0A1014",
+        "aqua_noir_tab_active": "#167FA8",
+        "aqua_noir_tab_active_hover": "#2098C5",
+        "aqua_noir_tab_outline": "#BCEEFF"
     },
     "rules": [
         {
             "class": "title_bar",
             "bg": "var(aqua_noir_title)",
-            "fg": "var(aqua_noir_fg_muted)",
+            "fg": "var(aqua_noir_fg)",
             "style": "dark"
         },
         {
@@ -469,12 +471,12 @@
             "class": "tabset_control",
             "layer0.texture": "Aqua Noir 3000/assets/rounded-4.png",
             "layer0.inner_margin": 4,
-            "layer0.tint": "var(aqua_noir_aqua_pressed)",
+            "layer0.tint": "var(aqua_noir_tab_well)",
             "layer0.opacity": 1.0,
             "layer1.texture": "Aqua Noir 3000/assets/bottom-border.png",
             "layer1.inner_margin": 1,
-            "layer1.tint": "var(aqua_noir_aqua_dim)",
-            "layer1.opacity": 0.42,
+            "layer1.tint": "var(aqua_noir_shadow)",
+            "layer1.opacity": 0.78,
             "content_margin": [
                 4,
                 2,
@@ -488,8 +490,8 @@
             "layer1.draw_center": false,
             "layer2.texture": "Aqua Noir 3000/assets/top-border.png",
             "layer2.inner_margin": 1,
-            "layer2.tint": "var(aqua_noir_aqua)",
-            "layer2.opacity": 0.22,
+            "layer2.tint": "var(aqua_noir_gloss)",
+            "layer2.opacity": 0.08,
             "layer2.draw_center": false
         },
         {
@@ -497,15 +499,15 @@
             "layer0.texture": "Aqua Noir 3000/assets/rounded-8.png",
             "layer0.inner_margin": 8,
             "layer0.tint": "var(aqua_noir_surface)",
-            "layer0.opacity": 0.2,
+            "layer0.opacity": 0.0,
             "layer1.texture": "Aqua Noir 3000/assets/aqua-gloss-8.png",
             "layer1.inner_margin": 8,
             "layer1.tint": "var(aqua_noir_gloss)",
-            "layer1.opacity": 0.05,
+            "layer1.opacity": 0.0,
             "layer2.texture": "Aqua Noir 3000/assets/rounded-8-outline.png",
             "layer2.inner_margin": 8,
             "layer2.tint": "var(aqua_noir_border)",
-            "layer2.opacity": 0.12,
+            "layer2.opacity": 0.0,
             "content_margin": [
                 10,
                 0,
@@ -515,38 +517,30 @@
             "max_margin_trim": 7,
             "hit_test_level": 0.0,
             "layer1.draw_center": true,
-            "layer2.draw_center": false,
-            "layer3.texture": "Aqua Noir 3000/assets/bottom-border.png",
-            "layer3.inner_margin": 1,
-            "layer3.tint": "var(aqua_noir_aqua_dim)",
-            "layer3.opacity": 0.0,
-            "layer3.draw_center": false
+            "layer2.draw_center": false
         },
         {
             "class": "tab_control",
             "attributes": [
                 "hover"
             ],
-            "layer0.opacity": 1.0,
+            "layer0.opacity": 0.72,
             "layer0.tint": "var(aqua_noir_hover)",
-            "layer1.opacity": 0.17,
+            "layer1.opacity": 0.09,
             "layer2.tint": "var(aqua_noir_aqua_dim)",
-            "layer2.opacity": 0.24,
-            "layer3.opacity": 0.38
+            "layer2.opacity": 0.22
         },
         {
             "class": "tab_control",
             "attributes": [
                 "selected"
             ],
-            "layer0.tint": "var(aqua_noir_aqua_deep)",
+            "layer0.tint": "var(aqua_noir_tab_active)",
             "layer0.opacity": 1.0,
-            "layer1.opacity": 0.24,
-            "layer2.opacity": 0.82,
-            "layer2.tint": "var(aqua_noir_aqua)",
-            "layer3.tint": "var(aqua_noir_aqua)",
-            "layer3.opacity": 1.0,
-            "layer1.tint": "var(aqua_noir_gloss_dim)"
+            "layer1.opacity": 0.34,
+            "layer2.opacity": 0.7,
+            "layer2.tint": "var(aqua_noir_tab_outline)",
+            "layer1.tint": "var(aqua_noir_gloss)"
         },
         {
             "class": "tab_control",
@@ -554,13 +548,12 @@
                 "selected",
                 "hover"
             ],
-            "layer0.tint": "var(aqua_noir_aqua_deep_hover)",
-            "layer1.opacity": 0.3,
-            "layer2.tint": "var(aqua_noir_aqua)",
-            "layer2.opacity": 0.94,
+            "layer0.tint": "var(aqua_noir_tab_active_hover)",
+            "layer1.opacity": 0.42,
+            "layer2.tint": "var(aqua_noir_tab_outline)",
+            "layer2.opacity": 0.86,
             "layer0.opacity": 1.0,
-            "layer3.opacity": 1.0,
-            "layer1.tint": "var(aqua_noir_gloss_dim)"
+            "layer1.tint": "var(aqua_noir_gloss)"
         },
         {
             "class": "tab_control",
@@ -568,25 +561,12 @@
                 "selected",
                 "highlighted"
             ],
-            "layer0.tint": "var(aqua_noir_aqua_deep)",
-            "layer2.tint": "var(aqua_noir_aqua)",
-            "layer2.opacity": 0.94,
-            "layer1.opacity": 0.28,
-            "layer3.tint": "var(aqua_noir_aqua)",
-            "layer3.opacity": 1.0,
+            "layer0.tint": "var(aqua_noir_tab_active)",
+            "layer2.tint": "var(aqua_noir_tab_outline)",
+            "layer2.opacity": 0.78,
+            "layer1.opacity": 0.38,
             "layer0.opacity": 1.0,
-            "layer1.tint": "var(aqua_noir_gloss_dim)"
-        },
-        {
-            "class": "tab_control",
-            "attributes": [
-                "dirty"
-            ],
-            "settings": [
-                "highlight_modified_tabs"
-            ],
-            "layer3.tint": "var(aqua_noir_yellow)",
-            "layer3.opacity": 1.0
+            "layer1.tint": "var(aqua_noir_gloss)"
         },
         {
             "class": "tab_label",
