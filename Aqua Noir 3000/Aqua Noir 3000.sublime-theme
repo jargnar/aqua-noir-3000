@@ -32,9 +32,9 @@
         "aqua_noir_aqua_deep_hover": "#194455",
         "aqua_noir_aqua_pressed": "#0C222D",
         "aqua_noir_tab_well": "#0A1014",
-        "aqua_noir_tab_active": "#167FA8",
-        "aqua_noir_tab_active_hover": "#2098C5",
-        "aqua_noir_tab_outline": "#BCEEFF"
+        "aqua_noir_tab_active": "#129BC8",
+        "aqua_noir_tab_active_hover": "#20B2DE",
+        "aqua_noir_tab_outline": "#D5F6FF"
     },
     "rules": [
         {
@@ -479,14 +479,14 @@
             "layer1.opacity": 0.78,
             "content_margin": [
                 4,
-                2,
+                3,
                 4,
-                2
+                3
             ],
             "tab_overlap": 0,
             "tab_width": 160,
             "tab_min_width": 72,
-            "tab_height": 30,
+            "tab_height": 24,
             "layer1.draw_center": false,
             "layer2.texture": "Aqua Noir 3000/assets/top-border.png",
             "layer2.inner_margin": 1,
@@ -537,8 +537,8 @@
             ],
             "layer0.tint": "var(aqua_noir_tab_active)",
             "layer0.opacity": 1.0,
-            "layer1.opacity": 0.34,
-            "layer2.opacity": 0.7,
+            "layer1.opacity": 0.46,
+            "layer2.opacity": 0.82,
             "layer2.tint": "var(aqua_noir_tab_outline)",
             "layer1.tint": "var(aqua_noir_gloss)"
         },
@@ -549,9 +549,9 @@
                 "hover"
             ],
             "layer0.tint": "var(aqua_noir_tab_active_hover)",
-            "layer1.opacity": 0.42,
+            "layer1.opacity": 0.54,
             "layer2.tint": "var(aqua_noir_tab_outline)",
-            "layer2.opacity": 0.86,
+            "layer2.opacity": 0.94,
             "layer0.opacity": 1.0,
             "layer1.tint": "var(aqua_noir_gloss)"
         },
@@ -563,8 +563,8 @@
             ],
             "layer0.tint": "var(aqua_noir_tab_active)",
             "layer2.tint": "var(aqua_noir_tab_outline)",
-            "layer2.opacity": 0.78,
-            "layer1.opacity": 0.38,
+            "layer2.opacity": 0.88,
+            "layer1.opacity": 0.5,
             "layer0.opacity": 1.0,
             "layer1.tint": "var(aqua_noir_gloss)"
         },
