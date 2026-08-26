@@ -16,6 +16,10 @@ Packages/
     ├── Aqua Noir 3000.sublime-theme
     ├── Aqua Noir 3000.sublime-color-scheme
     ├── Aqua Noir 3000.sublime-file-icons
+    ├── C Joy.sublime-*
+    ├── C++ Joy.sublime-*
+    ├── Dart Joy.sublime-*
+    ├── GDScript Joy.sublime-*
     ├── assets/
     └── icons/
 ```
@@ -30,3 +34,9 @@ Do not copy the contents of `Aqua Noir 3000` directly into `Packages`; the folde
 The matching jewel file icons load automatically with the theme. If Sublime was open during installation and the UI does not refresh, restart it once.
 
 No plug-in, additional settings, or external font is required.
+
+## Joy syntax variants
+
+The package also includes colorful syntax variants for C, C++, Dart, and GDScript. Choose one from **View → Syntax → Aqua Noir 3000**. Each Joy syntax automatically uses its matching Joy color scheme.
+
+If Sublime keeps choosing a built-in syntax for an extension, open a file of that type and use **View → Syntax → Open all with current extension as…** to select the Joy variant once.

@@ -1,0 +1,481 @@
+{
+  "name": "C Joy",
+  "variables": {
+    "background": "#000000",
+    "foreground": "#CDD6F4",
+    "muted": "#737D96",
+    "soft": "#939CB3",
+    "rose": "#F38BA8",
+    "peach": "#FAB387",
+    "gold": "#F9C97C",
+    "green": "#A6E3A1",
+    "teal": "#94E2D5",
+    "cyan": "#89DCEB",
+    "blue": "#89B4FA",
+    "lavender": "#B4BEFE",
+    "mauve": "#CBA6F7",
+    "pink": "#F5C2E7",
+    "red": "#F26D78",
+    "warning": "#F2CDCD"
+  },
+  "globals": {
+    "background": "var(background)",
+    "foreground": "var(foreground)",
+    "caret": "#F5E0DC",
+    "block_caret": "#F5E0DC",
+    "selection": "#30364F",
+    "selection_border": "#4A526E",
+    "inactive_selection": "#252A3A",
+    "inactive_selection_border": "#343A50",
+    "line_highlight": "#151925",
+    "find_highlight": "#F9C97C",
+    "find_highlight_foreground": "#0F111A",
+    "guide": "#22283A",
+    "active_guide": "#4A526E",
+    "stack_guide": "#343B52",
+    "gutter": "var(background)",
+    "gutter_foreground": "#505970",
+    "fold_marker": "#69738D",
+    "brackets_foreground": "var(blue)",
+    "brackets_options": "underline",
+    "misspelling": "var(rose)",
+    "accent": "var(blue)"
+  },
+  "rules": [
+    {
+      "name": "Comments",
+      "scope": "comment.line.double-slash.c, comment.block.c, comment.line.double-slash.c.joy, comment.block.c.joy",
+      "foreground": "var(muted)",
+      "font_style": "italic"
+    },
+    {
+      "name": "Documentation",
+      "scope": "comment.line.documentation.c, comment.block.documentation.c",
+      "foreground": "var(soft)"
+    },
+    {
+      "name": "Comment delimiters",
+      "scope": "punctuation.definition.comment.c, punctuation.definition.comment.begin.c, punctuation.definition.comment.end.c",
+      "foreground": "#596278"
+    },
+    {
+      "name": "Comment banners",
+      "scope": "meta.toc-list.banner.block.c",
+      "foreground": "var(lavender)",
+      "font_style": "bold"
+    },
+    {
+      "name": "Documentation commands",
+      "scope": "keyword.other.documentation.c.joy",
+      "foreground": "var(cyan)",
+      "font_style": "bold"
+    },
+    {
+      "name": "Documentation sigils",
+      "scope": "punctuation.definition.documentation.c.joy",
+      "foreground": "var(mauve)"
+    },
+    {
+      "name": "Inline documentation code",
+      "scope": "markup.raw.inline.documentation.c.joy",
+      "foreground": "var(teal)"
+    },
+    {
+      "name": "Critical markers",
+      "scope": "markup.warning.critical.comment.c.joy",
+      "foreground": "var(red)",
+      "font_style": "bold"
+    },
+    {
+      "name": "Warning markers",
+      "scope": "markup.warning.comment.c.joy",
+      "foreground": "var(gold)",
+      "font_style": "bold"
+    },
+    {
+      "name": "Notice markers",
+      "scope": "markup.note.comment.c.joy",
+      "foreground": "var(green)",
+      "font_style": "bold"
+    },
+    {
+      "name": "Links",
+      "scope": "markup.underline.link.c.joy",
+      "foreground": "var(blue)",
+      "font_style": "underline"
+    },
+    {
+      "name": "Disabled preprocessor branches",
+      "scope": "comment.block.preprocessor.c",
+      "foreground": "var(muted)",
+      "font_style": "italic"
+    },
+    {
+      "name": "Preprocessor directives",
+      "scope": "keyword.control.directive.c, keyword.control.directive.include.c, keyword.control.directive.define.c, keyword.control.directive.conditional.c, keyword.control.directive.other.c",
+      "foreground": "var(mauve)",
+      "font_style": "bold"
+    },
+    {
+      "name": "Preprocessor errors",
+      "scope": "keyword.control.directive.error.c",
+      "foreground": "var(red)",
+      "font_style": "bold"
+    },
+    {
+      "name": "Macro definitions",
+      "scope": "entity.name.function.preprocessor.c, entity.name.constant.preprocessor.c",
+      "foreground": "var(pink)",
+      "font_style": "bold"
+    },
+    {
+      "name": "Macro references",
+      "scope": "constant.other.macro-reference.c.joy, variable.function.assumed-macro.c",
+      "foreground": "var(pink)"
+    },
+    {
+      "name": "Macro parameters",
+      "scope": "variable.parameter.c meta.preprocessor, variable.language.variadic.preprocessor.c.joy",
+      "foreground": "var(cyan)",
+      "font_style": "italic"
+    },
+    {
+      "name": "Macro composition",
+      "scope": "keyword.operator.token-paste.preprocessor.c.joy, keyword.operator.stringification.preprocessor.c.joy",
+      "foreground": "var(peach)",
+      "font_style": "bold"
+    },
+    {
+      "name": "Include paths",
+      "scope": "string.quoted.double.include.c, string.quoted.other.lt-gt.include.c",
+      "foreground": "var(green)"
+    },
+    {
+      "name": "Conditional flow",
+      "scope": "keyword.control.conditional.c.joy, keyword.control.c",
+      "foreground": "var(rose)",
+      "font_style": "bold"
+    },
+    {
+      "name": "Loops",
+      "scope": "keyword.control.loop.c.joy",
+      "foreground": "var(rose)",
+      "font_style": "bold"
+    },
+    {
+      "name": "Return",
+      "scope": "keyword.control.flow.return.c.joy, keyword.control.flow.return.c",
+      "foreground": "var(red)",
+      "font_style": "bold"
+    },
+    {
+      "name": "Loop exits",
+      "scope": "keyword.control.flow.loop.c.joy, keyword.control.flow.break.c, keyword.control.flow.continue.c",
+      "foreground": "var(rose)",
+      "font_style": "bold"
+    },
+    {
+      "name": "Goto",
+      "scope": "keyword.control.flow.goto.c.joy, keyword.control.flow.goto.c",
+      "foreground": "var(red)",
+      "font_style": "italic"
+    },
+    {
+      "name": "Assertions",
+      "scope": "keyword.control.assert.c.joy",
+      "foreground": "var(peach)",
+      "font_style": "bold"
+    },
+    {
+      "name": "Type introspection",
+      "scope": "keyword.operator.type-introspection.c.joy, keyword.operator.word.c",
+      "foreground": "var(lavender)",
+      "font_style": "italic"
+    },
+    {
+      "name": "Type declarations",
+      "scope": "keyword.declaration.struct.c, keyword.declaration.union.c, keyword.declaration.enum.c, keyword.declaration.type.c",
+      "foreground": "var(mauve)",
+      "font_style": "bold"
+    },
+    {
+      "name": "Type names",
+      "scope": "entity.name.struct.c, entity.name.union.c, entity.name.enum.c, entity.name.type.typedef.c",
+      "foreground": "var(blue)",
+      "font_style": "bold"
+    },
+    {
+      "name": "Storage duration",
+      "scope": "storage.modifier.storage-duration.c.joy",
+      "foreground": "var(lavender)"
+    },
+    {
+      "name": "Type qualifiers",
+      "scope": "storage.modifier.type-qualifier.c.joy",
+      "foreground": "var(cyan)",
+      "font_style": "italic"
+    },
+    {
+      "name": "Function intent",
+      "scope": "storage.modifier.function-intent.c.joy",
+      "foreground": "var(green)"
+    },
+    {
+      "name": "Constant evaluation",
+      "scope": "storage.modifier.constant-evaluation.c.joy",
+      "foreground": "var(gold)",
+      "font_style": "bold"
+    },
+    {
+      "name": "Other modifiers",
+      "scope": "storage.modifier.c",
+      "foreground": "var(lavender)"
+    },
+    {
+      "name": "Boolean types",
+      "scope": "support.type.scalar.boolean.c.joy",
+      "foreground": "var(rose)",
+      "font_style": "italic"
+    },
+    {
+      "name": "Integer types",
+      "scope": "support.type.scalar.integer.c.joy, support.type.stdint.c",
+      "foreground": "var(cyan)",
+      "font_style": "italic"
+    },
+    {
+      "name": "Floating types",
+      "scope": "support.type.scalar.floating.c.joy",
+      "foreground": "var(teal)",
+      "font_style": "italic"
+    },
+    {
+      "name": "Void",
+      "scope": "support.type.void.c.joy",
+      "foreground": "var(soft)",
+      "font_style": "italic"
+    },
+    {
+      "name": "Complex types",
+      "scope": "support.type.complex.c.joy, support.type.complex.c",
+      "foreground": "var(lavender)"
+    },
+    {
+      "name": "Atomic types",
+      "scope": "support.type.atomic.c.joy, support.type.stdatomic.c",
+      "foreground": "var(blue)"
+    },
+    {
+      "name": "Fixed-width types",
+      "scope": "support.type.fixed-width.c.joy",
+      "foreground": "var(cyan)"
+    },
+    {
+      "name": "Standard typedefs",
+      "scope": "support.type.standard.c.joy, support.type.stdio.c, support.type.stdlib.c, support.type.stddef.c, support.type.time.c, support.type.threads.c",
+      "foreground": "var(blue)"
+    },
+    {
+      "name": "Typedef convention",
+      "scope": "support.type.typedef-convention.c.joy, support.type.posix-reserved.c",
+      "foreground": "var(lavender)"
+    },
+    {
+      "name": "Built-in types",
+      "scope": "storage.type.c, support.type",
+      "foreground": "var(cyan)"
+    },
+    {
+      "name": "Function definitions",
+      "scope": "entity.name.function.c",
+      "foreground": "var(gold)",
+      "font_style": "bold"
+    },
+    {
+      "name": "Function calls",
+      "scope": "variable.function.c",
+      "foreground": "var(green)"
+    },
+    {
+      "name": "Memory functions",
+      "scope": "support.function.memory.c.joy",
+      "foreground": "var(peach)"
+    },
+    {
+      "name": "String functions",
+      "scope": "support.function.string.c.joy",
+      "foreground": "var(green)"
+    },
+    {
+      "name": "I/O functions",
+      "scope": "support.function.io.c.joy",
+      "foreground": "var(cyan)"
+    },
+    {
+      "name": "Math functions",
+      "scope": "support.function.math.c.joy",
+      "foreground": "var(lavender)"
+    },
+    {
+      "name": "Conversion functions",
+      "scope": "support.function.conversion.c.joy",
+      "foreground": "var(teal)"
+    },
+    {
+      "name": "Process functions",
+      "scope": "support.function.process.c.joy",
+      "foreground": "var(rose)"
+    },
+    {
+      "name": "Atomic functions",
+      "scope": "support.function.atomic.c.joy",
+      "foreground": "var(blue)"
+    },
+    {
+      "name": "Thread functions",
+      "scope": "support.function.thread.c.joy",
+      "foreground": "var(mauve)"
+    },
+    {
+      "name": "C99 library functions",
+      "scope": "support.function.C99.c",
+      "foreground": "var(green)"
+    },
+    {
+      "name": "Parameters",
+      "scope": "variable.parameter.c",
+      "foreground": "var(cyan)",
+      "font_style": "italic"
+    },
+    {
+      "name": "Members",
+      "scope": "variable.other.member.c, variable.other.readwrite.member.c",
+      "foreground": "var(cyan)"
+    },
+    {
+      "name": "Global/static conventions",
+      "scope": "variable.other.readwrite.global.c, variable.other.readwrite.static.c",
+      "foreground": "var(lavender)"
+    },
+    {
+      "name": "Enum constants",
+      "scope": "entity.name.constant.c, constant.other.variable.c",
+      "foreground": "var(gold)",
+      "font_style": "bold"
+    },
+    {
+      "name": "Compiler constants",
+      "scope": "support.constant.compiler.c.joy",
+      "foreground": "var(mauve)",
+      "font_style": "italic"
+    },
+    {
+      "name": "Standard constants",
+      "scope": "support.constant.standard.c.joy, support.constant.c",
+      "foreground": "var(gold)"
+    },
+    {
+      "name": "Null",
+      "scope": "constant.language.null.c.joy, constant.language.null.c",
+      "foreground": "var(soft)",
+      "font_style": "italic"
+    },
+    {
+      "name": "Booleans",
+      "scope": "constant.language.boolean.c.joy, constant.language.boolean.true.c, constant.language.boolean.false.c",
+      "foreground": "var(rose)",
+      "font_style": "italic"
+    },
+    {
+      "name": "Strings",
+      "scope": "string.quoted.double.c, string.unquoted.c",
+      "foreground": "var(green)"
+    },
+    {
+      "name": "Characters",
+      "scope": "string.quoted.single.c",
+      "foreground": "var(pink)"
+    },
+    {
+      "name": "String delimiters",
+      "scope": "punctuation.definition.string.c, punctuation.definition.string.begin.c, punctuation.definition.string.end.c",
+      "foreground": "#78B58D"
+    },
+    {
+      "name": "Escapes",
+      "scope": "constant.character.escape.c",
+      "foreground": "var(peach)",
+      "font_style": "bold"
+    },
+    {
+      "name": "Format placeholders",
+      "scope": "constant.other.placeholder.c",
+      "foreground": "var(gold)",
+      "font_style": "bold"
+    },
+    {
+      "name": "Numbers",
+      "scope": "constant.numeric.value.c",
+      "foreground": "var(peach)"
+    },
+    {
+      "name": "Numeric bases/suffixes",
+      "scope": "constant.numeric.base.c, constant.numeric.suffix.c",
+      "foreground": "var(blue)"
+    },
+    {
+      "name": "Operators",
+      "scope": "keyword.operator.c, keyword.operator.arithmetic.c, keyword.operator.comparison.c, keyword.operator.logical.c, keyword.operator.bitwise.c",
+      "foreground": "var(blue)"
+    },
+    {
+      "name": "Assignment",
+      "scope": "keyword.operator.assignment.c",
+      "foreground": "var(lavender)"
+    },
+    {
+      "name": "Variadic operators",
+      "scope": "keyword.operator.variadic.c",
+      "foreground": "var(mauve)",
+      "font_style": "bold"
+    },
+    {
+      "name": "Attributes",
+      "scope": "meta.attribute.c storage.modifier.c",
+      "foreground": "var(pink)"
+    },
+    {
+      "name": "Access punctuation",
+      "scope": "punctuation.accessor.c, punctuation.accessor.dot.c, punctuation.accessor.arrow.c",
+      "foreground": "var(cyan)"
+    },
+    {
+      "name": "Grouping punctuation",
+      "scope": "punctuation.section.group.c, punctuation.section.block.c, punctuation.section.brackets.c",
+      "foreground": "var(soft)"
+    },
+    {
+      "name": "Separators",
+      "scope": "punctuation.separator.c, punctuation.terminator.c",
+      "foreground": "var(muted)"
+    },
+    {
+      "name": "Merge conflict begin/end",
+      "scope": "meta.block.conflict.begin.diff, meta.block.conflict.end.diff",
+      "foreground": "var(red)",
+      "font_style": "bold"
+    },
+    {
+      "name": "Merge conflict separator",
+      "scope": "meta.block.conflict.separator.diff",
+      "foreground": "var(gold)",
+      "font_style": "bold"
+    },
+    {
+      "name": "Invalid source",
+      "scope": "invalid.illegal",
+      "foreground": "var(red)",
+      "font_style": "stippled_underline"
+    }
+  ]
+}
