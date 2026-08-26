@@ -161,7 +161,6 @@
             "font.size": 9,
             "font.bold": true,
             "case": "upper",
-            "font.face": "JetBrains Mono",
             "shadow_color": "#000000CC",
             "shadow_offset": [
                 0,
@@ -182,7 +181,6 @@
             "class": "sidebar_label",
             "color": "var(aqua_noir_fg_muted)",
             "font.size": 11,
-            "font.face": "JetBrains Mono",
             "shadow_color": "#000000CC",
             "shadow_offset": [
                 0,
@@ -471,12 +469,12 @@
             "class": "tabset_control",
             "layer0.texture": "Aqua Noir 3000/assets/rounded-4.png",
             "layer0.inner_margin": 4,
-            "layer0.tint": "var(aqua_noir_bg)",
+            "layer0.tint": "var(aqua_noir_aqua_pressed)",
             "layer0.opacity": 1.0,
             "layer1.texture": "Aqua Noir 3000/assets/bottom-border.png",
             "layer1.inner_margin": 1,
-            "layer1.tint": "var(aqua_noir_border_soft)",
-            "layer1.opacity": 1.0,
+            "layer1.tint": "var(aqua_noir_aqua_dim)",
+            "layer1.opacity": 0.42,
             "content_margin": [
                 4,
                 2,
@@ -490,8 +488,8 @@
             "layer1.draw_center": false,
             "layer2.texture": "Aqua Noir 3000/assets/top-border.png",
             "layer2.inner_margin": 1,
-            "layer2.tint": "var(aqua_noir_gloss)",
-            "layer2.opacity": 0.055,
+            "layer2.tint": "var(aqua_noir_aqua)",
+            "layer2.opacity": 0.22,
             "layer2.draw_center": false
         },
         {
@@ -518,9 +516,9 @@
             "hit_test_level": 0.0,
             "layer1.draw_center": true,
             "layer2.draw_center": false,
-            "layer3.texture": "",
+            "layer3.texture": "Aqua Noir 3000/assets/bottom-border.png",
             "layer3.inner_margin": 1,
-            "layer3.tint": "var(aqua_noir_aqua_soft)",
+            "layer3.tint": "var(aqua_noir_aqua_dim)",
             "layer3.opacity": 0.0,
             "layer3.draw_center": false
         },
@@ -534,20 +532,20 @@
             "layer1.opacity": 0.17,
             "layer2.tint": "var(aqua_noir_aqua_dim)",
             "layer2.opacity": 0.24,
-            "layer3.opacity": 0.0
+            "layer3.opacity": 0.38
         },
         {
             "class": "tab_control",
             "attributes": [
                 "selected"
             ],
-            "layer0.tint": "var(aqua_noir_tab_active)",
+            "layer0.tint": "var(aqua_noir_aqua_deep)",
             "layer0.opacity": 1.0,
-            "layer1.opacity": 0.16,
-            "layer2.opacity": 0.28,
-            "layer2.tint": "var(aqua_noir_aqua_dim)",
-            "layer3.tint": "var(aqua_noir_aqua_dim)",
-            "layer3.opacity": 0.0,
+            "layer1.opacity": 0.24,
+            "layer2.opacity": 0.82,
+            "layer2.tint": "var(aqua_noir_aqua)",
+            "layer3.tint": "var(aqua_noir_aqua)",
+            "layer3.opacity": 1.0,
             "layer1.tint": "var(aqua_noir_gloss_dim)"
         },
         {
@@ -556,12 +554,12 @@
                 "selected",
                 "hover"
             ],
-            "layer0.tint": "var(aqua_noir_tab_active_hover)",
-            "layer1.opacity": 0.22,
-            "layer2.tint": "var(aqua_noir_aqua_dim)",
-            "layer2.opacity": 0.38,
+            "layer0.tint": "var(aqua_noir_aqua_deep_hover)",
+            "layer1.opacity": 0.3,
+            "layer2.tint": "var(aqua_noir_aqua)",
+            "layer2.opacity": 0.94,
             "layer0.opacity": 1.0,
-            "layer3.opacity": 0.0,
+            "layer3.opacity": 1.0,
             "layer1.tint": "var(aqua_noir_gloss_dim)"
         },
         {
@@ -570,12 +568,12 @@
                 "selected",
                 "highlighted"
             ],
-            "layer0.tint": "var(aqua_noir_tab_active)",
+            "layer0.tint": "var(aqua_noir_aqua_deep)",
             "layer2.tint": "var(aqua_noir_aqua)",
-            "layer2.opacity": 0.36,
-            "layer1.opacity": 0.2,
+            "layer2.opacity": 0.94,
+            "layer1.opacity": 0.28,
             "layer3.tint": "var(aqua_noir_aqua)",
-            "layer3.opacity": 0.0,
+            "layer3.opacity": 1.0,
             "layer0.opacity": 1.0,
             "layer1.tint": "var(aqua_noir_gloss_dim)"
         },
@@ -588,13 +586,12 @@
                 "highlight_modified_tabs"
             ],
             "layer3.tint": "var(aqua_noir_yellow)",
-            "layer3.opacity": 0.0
+            "layer3.opacity": 1.0
         },
         {
             "class": "tab_label",
             "color": "var(aqua_noir_fg_dim)",
             "font.size": 10,
-            "font.face": "JetBrains Mono",
             "shadow_color": "#000000CC",
             "shadow_offset": [
                 0,
@@ -631,7 +628,6 @@
                 "transient"
             ],
             "font.italic": true,
-            "font.face": "JetBrains Mono",
             "shadow_color": "#000000CC",
             "shadow_offset": [
                 0,
@@ -644,7 +640,6 @@
                 "dirty"
             ],
             "color": "var(aqua_noir_yellow)",
-            "font.face": "JetBrains Mono",
             "shadow_color": "#000000CC",
             "shadow_offset": [
                 0,
@@ -845,7 +840,6 @@
             "selected_fg": "var(aqua_noir_fg)",
             "selected_match_fg": "var(aqua_noir_accent)",
             "font.size": 12,
-            "font.face": "JetBrains Mono"
         },
         {
             "class": "quick_panel_path_label",
@@ -854,7 +848,6 @@
             "selected_fg": "var(aqua_noir_fg_muted)",
             "selected_match_fg": "var(aqua_noir_accent)",
             "font.size": 11,
-            "font.face": "JetBrains Mono"
         },
         {
             "class": "quick_panel_label key_binding",
@@ -863,7 +856,6 @@
             "selected_fg": "var(aqua_noir_fg_muted)",
             "selected_match_fg": "var(aqua_noir_fg_muted)",
             "font.size": 10,
-            "font.face": "JetBrains Mono"
         },
         {
             "class": "quick_panel_label hint",
@@ -872,7 +864,6 @@
             "selected_fg": "var(aqua_noir_fg_muted)",
             "selected_match_fg": "var(aqua_noir_fg_muted)",
             "font.size": 10,
-            "font.face": "JetBrains Mono"
         },
         {
             "class": "quick_panel_detail_label",
@@ -880,7 +871,6 @@
             "link_color": "var(aqua_noir_blue)",
             "monospace_color": "var(aqua_noir_fg_muted)",
             "monospace_background_color": "var(aqua_noir_surface)",
-            "font.face": "JetBrains Mono"
         },
         {
             "class": "symbol_container",
@@ -1309,14 +1299,12 @@
             "selected_fg": "var(aqua_noir_fg)",
             "selected_match_fg": "var(aqua_noir_accent)",
             "fg_blend": false,
-            "font.face": "JetBrains Mono"
         },
         {
             "class": "auto_complete_label auto_complete_hint",
             "color": "var(aqua_noir_fg_dim)",
             "fg_blend": false,
             "font.size": "0.9rem",
-            "font.face": "JetBrains Mono"
         },
         {
             "class": "auto_complete_detail_pane",
@@ -1342,7 +1330,6 @@
             "background_color": "var(aqua_noir_surface)",
             "border_color": "var(aqua_noir_border)",
             "font.size": "0.85rem",
-            "font.face": "JetBrains Mono"
         },
         {
             "class": "auto_complete_details",
@@ -1645,13 +1632,11 @@
             "background_color": "var(aqua_noir_surface)",
             "border_color": "var(aqua_noir_border)",
             "font.size": 10,
-            "font.face": "JetBrains Mono"
         },
         {
             "class": "label_control",
             "color": "var(aqua_noir_fg_muted)",
             "font.size": 11,
-            "font.face": "JetBrains Mono"
         },
         {
             "class": "label_control",
@@ -1662,7 +1647,6 @@
             ],
             "color": "var(aqua_noir_fg_dim)",
             "font.size": 10,
-            "font.face": "JetBrains Mono"
         },
         {
             "class": "label_control",
@@ -1685,7 +1669,6 @@
             ],
             "color": "var(aqua_noir_fg_muted)",
             "font.size": 10,
-            "font.face": "JetBrains Mono"
         },
         {
             "class": "label_control",
@@ -1784,7 +1767,7 @@
         {
             "class": "icon_button_control",
             "layer0.tint": "var(aqua_noir_fg_muted)",
-            "layer0.opacity": 0.0,
+            "layer0.opacity": 0.82,
             "layer1.texture": "Aqua Noir 3000/assets/rounded-6.png",
             "layer1.inner_margin": 6,
             "layer1.tint": "var(aqua_noir_surface_2)",
@@ -1805,9 +1788,7 @@
             "layer3.opacity": 0.58,
             "layer3.draw_center": false,
             "hit_test_level": 0.0,
-            "layer0.texture": "",
-            "layer0.inner_margin": 0,
-            "layer0.draw_center": false
+            "layer0.draw_center": true
         },
         {
             "class": "icon_button_control",
@@ -1815,7 +1796,7 @@
                 "hover"
             ],
             "layer0.tint": "var(aqua_noir_fg)",
-            "layer0.opacity": 0.0,
+            "layer0.opacity": 1.0,
             "layer1.opacity": 1.0,
             "layer1.tint": "var(aqua_noir_hover)",
             "layer2.opacity": 0.1,
@@ -1829,7 +1810,7 @@
                 "selected"
             ],
             "layer0.tint": "var(aqua_noir_fg)",
-            "layer0.opacity": 0.0,
+            "layer0.opacity": 1.0,
             "layer1.tint": "var(aqua_noir_aqua_deep)",
             "layer1.opacity": 1.0,
             "layer2.tint": "var(aqua_noir_aqua_dim)",
@@ -1844,7 +1825,7 @@
                 "hover"
             ],
             "layer0.tint": "var(aqua_noir_fg)",
-            "layer0.opacity": 0.0,
+            "layer0.opacity": 1.0,
             "layer1.tint": "var(aqua_noir_aqua_deep_hover)",
             "layer1.opacity": 1.0,
             "layer2.tint": "var(aqua_noir_aqua)",
@@ -1959,7 +1940,6 @@
             "class": "tool_tip_label_control",
             "color": "var(aqua_noir_fg)",
             "font.size": 10,
-            "font.face": "JetBrains Mono"
         },
         {
             "class": "dropdown_button_control",
@@ -1985,7 +1965,6 @@
                 }
             ],
             "color": "var(aqua_noir_fg)",
-            "font.face": "JetBrains Mono"
         },
         {
             "class": "icon_button_control",
@@ -1993,20 +1972,13 @@
                 "pressed"
             ],
             "layer0.tint": "var(aqua_noir_fg)",
-            "layer0.opacity": 0.0,
+            "layer0.opacity": 1.0,
             "layer1.tint": "var(aqua_noir_aqua_pressed)",
             "layer1.opacity": 1.0,
             "layer2.opacity": 0.035,
             "layer3.tint": "var(aqua_noir_aqua_dim)",
             "layer3.opacity": 0.7,
             "layer2.tint": "var(aqua_noir_aqua_dim)"
-        },
-        {
-            "class": "icon_button_control",
-            "layer0.texture": "",
-            "layer0.inner_margin": 0,
-            "layer0.draw_center": false,
-            "layer0.opacity": 0.0
         }
     ]
 }

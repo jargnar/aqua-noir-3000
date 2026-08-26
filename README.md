@@ -1,5 +1,32 @@
-# Aqua Noir 3000 for Sublime Text
+# Aqua Noir 3000
 
-Aqua Noir 3000 is a new age Sublime Text 4 theme. It includes no plugin code, JavaScript, background tasks, blur, or keyframe animation. Needs JetBrains Mono font to be installed on your machine.
+A colorful Aqua-inspired theme, color scheme, and file icon set for Sublime Text 4.
 
-<img width="1061" height="908" alt="Screenshot 2026-08-21 at 2 09 40 PM" src="https://github.com/user-attachments/assets/5e8e6f76-329f-4f5e-b1b1-b84e4629d200" />
+## Install
+
+1. In Sublime Text, choose **Preferences → Browse Packages…**.
+2. If you installed an older version, remove its loose `Aqua Noir 3000*` files and its top-level `assets` and `icons` folders first. Only remove files that came from this theme.
+3. Copy the entire [`Aqua Noir 3000`](./Aqua%20Noir%203000) folder into the opened `Packages` folder.
+
+The final layout must be:
+
+```text
+Packages/
+└── Aqua Noir 3000/
+    ├── Aqua Noir 3000.sublime-theme
+    ├── Aqua Noir 3000.sublime-color-scheme
+    ├── Aqua Noir 3000.sublime-file-icons
+    ├── assets/
+    └── icons/
+```
+
+Do not copy the contents of `Aqua Noir 3000` directly into `Packages`; the folder name is required for its texture paths.
+
+## Activate
+
+1. Choose **Preferences → Select Theme… → Aqua Noir 3000**.
+2. Choose **Preferences → Select Color Scheme… → Aqua Noir 3000**.
+
+The matching jewel file icons load automatically with the theme. If Sublime was open during installation and the UI does not refresh, restart it once.
+
+No plug-in, additional settings, or external font is required.
